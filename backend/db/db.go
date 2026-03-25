@@ -24,9 +24,10 @@ func InitDB() {
 }
 
 type PhotoMeta struct {
-	Filename string `json:"filename"`
-	Title    string `json:"title"`
-	Tag      string `json:"tag"`
+	Filename   string    `json:"filename"`
+	Title      string    `json:"title"`
+	Tag        string    `json:"tag"`
+	UploadedAt time.Time `json:"uploaded_at"`
 }
 
 func SavePhotoMeta(meta PhotoMeta) error {

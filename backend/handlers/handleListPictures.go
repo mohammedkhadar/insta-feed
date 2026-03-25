@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
+	"sort"
 
 	db "bowatt-server/db"
 )
@@ -32,6 +33,10 @@ func HandleListPictures(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(map[string]string{"error": "Could not read photo metadata"})
 		return
 	}
+
+	sort.Slice(metas, func(i, j int) bool {
+		return metas[i].UploadedAt.After(metas[j].UploadedAt)
+	})
 
 	host := getHostURL(r)
 	pictures := make([]Picture, 0, len(metas))

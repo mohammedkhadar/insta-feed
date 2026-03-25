@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"time"
 
 	db "bowatt-server/db"
 )
@@ -48,9 +49,10 @@ func HandleUploadPhoto(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if err := db.SavePhotoMeta(db.PhotoMeta{
-		Filename: handler.Filename,
-		Title:    title,
-		Tag:      tag,
+		Filename:   handler.Filename,
+		Title:      title,
+		Tag:        tag,
+		UploadedAt: time.Now(),
 	}); err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{"error": "Could not save metadata"})
