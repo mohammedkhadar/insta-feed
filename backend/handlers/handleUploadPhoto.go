@@ -32,7 +32,7 @@ func HandleUploadPhoto(w http.ResponseWriter, r *http.Request) {
 	defer file.Close()
 	title := r.FormValue("title")
 	tag := r.FormValue("tag")
-	picDir := "./pictures"
+	picDir := "./data/pictures"
 	if _, err := os.Stat(picDir); os.IsNotExist(err) {
 		os.Mkdir(picDir, 0755)
 	}

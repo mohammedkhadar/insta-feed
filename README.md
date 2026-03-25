@@ -74,3 +74,15 @@ cd frontend && npm run dev
 ```
 
 Then open `http://localhost:5173` in your browser.
+
+## Docker
+
+Build and run the full stack with Docker Compose:
+
+```bash
+docker-compose up --build
+```
+
+Then open `http://localhost` in your browser.
+
+The frontend (nginx) runs on port 80 and proxies `/api`, `/pictures`, and `/ws` to the backend on port 8080. Uploaded images and the database are persisted in named Docker volumes.

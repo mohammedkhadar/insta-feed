@@ -3,6 +3,7 @@ package db
 import (
 	"encoding/json"
 	"log"
+	"os"
 	"time"
 
 	"go.etcd.io/bbolt"
@@ -12,7 +13,10 @@ var db *bbolt.DB
 
 func InitDB() {
 	var err error
-	db, err = bbolt.Open("photos.db", 0666, &bbolt.Options{Timeout: 1 * time.Second})
+	if err = os.MkdirAll("data", 0755); err != nil {
+		log.Fatalf("failed to create data dir: %v", err)
+	}
+	db, err = bbolt.Open("data/photos.db", 0666, &bbolt.Options{Timeout: 1 * time.Second})
 	if err != nil {
 		log.Fatalf("failed to open BoltDB: %v", err)
 	}

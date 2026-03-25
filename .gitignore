@@ -1,3 +1,6 @@
 backend/pictures/
 backend/photos.db
+backend/data/
 .DS_Store
+frontend/node_modules/
+frontend/dist/

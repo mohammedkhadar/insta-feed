@@ -12,7 +12,7 @@ func main() {
 	db.InitDB()
 	http.HandleFunc("/", handlers.HandleHome)
 	http.HandleFunc("/api/pictures", handlers.HandleListPictures)
-	http.Handle("/pictures/", http.StripPrefix("/pictures/", http.FileServer(http.Dir("./pictures"))))
+	http.Handle("/pictures/", http.StripPrefix("/pictures/", http.FileServer(http.Dir("./data/pictures"))))
 	http.HandleFunc("/api/upload", handlers.HandleUploadPhoto)
 	http.HandleFunc("/ws", handlers.HandleWS)
 
