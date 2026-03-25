@@ -24,20 +24,6 @@ func getHostURL(r *http.Request) string {
 
 func HandleListPictures(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	page, perPage := 1, 10
-	if p := r.URL.Query().Get("page"); p != "" {
-		fmt.Sscanf(p, "%d", &page)
-		if page < 1 {
-			page = 1
-		}
-	}
-	if pp := r.URL.Query().Get("per_page"); pp != "" {
-		fmt.Sscanf(pp, "%d", &perPage)
-		if perPage < 1 {
-			perPage = 10
-		}
-	}
-
 	tag := r.URL.Query().Get("tag")
 
 	metas, err := db.GetAllPhotoMeta()
@@ -59,21 +45,8 @@ func HandleListPictures(w http.ResponseWriter, r *http.Request) {
 			Tag:   m.Tag,
 		})
 	}
-	total := len(pictures)
-	start := (page - 1) * perPage
-	end := start + perPage
-	if start > total {
-		start = total
-	}
-	if end > total {
-		end = total
-	}
-	pagedPictures := pictures[start:end]
 
 	json.NewEncoder(w).Encode(map[string]interface{}{
-		"pictures": pagedPictures,
-		"page": page,
-		"per_page": perPage,
-		"total": total,
+		"pictures": pictures,
 	})
 }

@@ -41,7 +41,7 @@ The server starts at `http://localhost:8080`.
 
 | Method | Path | Description |
 |--------|------|-------------|
-| GET | `/api/pictures` | List photos (supports `?tag=` and `?page=`, `?per_page=`) |
+| GET | `/api/pictures` | List photos (supports `?tag=`) |
 | POST | `/api/upload` | Upload a photo (multipart: `photo`, `title`, `tag`) |
 | GET | `/pictures/<filename>` | Serve uploaded images |
 | GET | `/ws` | WebSocket connection for live feed updates |
