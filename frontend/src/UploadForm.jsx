@@ -42,33 +42,55 @@ export default function UploadForm() {
 
   return (
     <>
-      <button onClick={() => setOpen(true)} style={{ marginBottom: 24 }}>
+      <button
+        onClick={() => setOpen(true)}
+        className="mb-6 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition font-medium"
+      >
         Upload Photo
       </button>
       <Modal open={open} onClose={() => setOpen(false)}>
-        <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: 12 }}>
-            <label>
-              Title:<br />
-              <input type="text" value={title} onChange={e => setTitle(e.target.value)} disabled={loading} style={{ width: '100%' }} />
-            </label>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Title</label>
+            <input
+              type="text"
+              value={title}
+              onChange={e => setTitle(e.target.value)}
+              disabled={loading}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
           </div>
-          <div style={{ marginBottom: 12 }}>
-            <label>
-              Tag:<br />
-              <input type="text" value={tag} onChange={e => setTag(e.target.value)} disabled={loading} style={{ width: '100%' }} />
-            </label>
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">Tag</label>
+            <input
+              type="text"
+              value={tag}
+              onChange={e => setTag(e.target.value)}
+              disabled={loading}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
           </div>
-          <div style={{ marginBottom: 12 }}>
-            <input type="file" accept="image/*" ref={fileInput} disabled={loading} />
+          <div>
+            <input type="file" accept="image/*" ref={fileInput} disabled={loading} className="text-sm text-gray-600" />
           </div>
-          <button type="submit" disabled={loading} style={{ marginRight: 8 }}>
-            {loading ? 'Uploading...' : 'Upload'}
-          </button>
-          <button type="button" onClick={() => setOpen(false)} disabled={loading}>
-            Cancel
-          </button>
-          {error && <div style={{ color: 'red', marginTop: 8 }}>{error}</div>}
+          <div className="flex gap-2">
+            <button
+              type="submit"
+              disabled={loading}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition text-sm font-medium disabled:opacity-50"
+            >
+              {loading ? 'Uploading...' : 'Upload'}
+            </button>
+            <button
+              type="button"
+              onClick={() => setOpen(false)}
+              disabled={loading}
+              className="bg-gray-100 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-200 transition text-sm font-medium disabled:opacity-50"
+            >
+              Cancel
+            </button>
+          </div>
+          {error && <p className="text-red-500 text-sm">{error}</p>}
         </form>
       </Modal>
     </>

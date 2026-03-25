@@ -66,16 +66,20 @@ export default function PhotoFeed() {
     return () => ws.close();
   }, []);
 
-  if (loading) return <div>Loading photos...</div>;
-  if (error) return <div style={{ color: 'red' }}>{error}</div>;
+  if (loading) return <div className="text-gray-500">Loading photos...</div>;
+  if (error) return <div className="text-red-500">{error}</div>;
 
   return (
     <div>
       {allTags.length > 0 && (
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 16 }}>
+        <div className="flex flex-wrap gap-2 mb-4">
           <button
             onClick={() => handleTagClick('')}
-            style={{ fontWeight: activeTag === '' ? 'bold' : 'normal', cursor: 'pointer' }}
+            className={`px-3 py-1 rounded-full text-sm border transition ${
+              activeTag === ''
+                ? 'bg-blue-600 text-white border-blue-600'
+                : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100'
+            }`}
           >
             All
           </button>
@@ -83,24 +87,30 @@ export default function PhotoFeed() {
             <button
               key={tag}
               onClick={() => handleTagClick(tag)}
-              style={{ fontWeight: activeTag === tag ? 'bold' : 'normal', cursor: 'pointer' }}
+              className={`px-3 py-1 rounded-full text-sm border transition ${
+                activeTag === tag
+                  ? 'bg-blue-600 text-white border-blue-600'
+                  : 'bg-white text-gray-600 border-gray-300 hover:bg-gray-100'
+              }`}
             >
               #{tag}
             </button>
           ))}
         </div>
       )}
-      {!photos.length && <div>No photos yet.</div>}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16 }}>
+      {!photos.length && <div className="text-gray-400">No photos yet.</div>}
+      <div className="grid grid-cols-3 gap-4">
         {photos.map((photo, i) => (
-          <div key={i} style={{ width: 180 }}>
+          <div key={i} className="rounded-xl overflow-hidden shadow hover:shadow-md transition">
             <img
               src={photo.url}
               alt={photo.title || 'Uploaded'}
-              style={{ width: 180, height: 180, objectFit: 'cover', borderRadius: 8 }}
+              className="w-full h-44 object-cover"
             />
-            <div style={{ fontWeight: 'bold', marginTop: 4 }}>{photo.title}</div>
-            <div style={{ color: '#888', fontSize: 13 }}>{photo.tag ? `#${photo.tag}` : ''}</div>
+            <div className="p-2">
+              <div className="font-semibold text-sm truncate">{photo.title}</div>
+              <div className="text-gray-400 text-xs">{photo.tag ? `#${photo.tag}` : ''}</div>
+            </div>
           </div>
         ))}
       </div>
