@@ -1,4 +1,4 @@
-# Bowatt Challenge
+# Insta Feed
 
 A photo upload and feed app with a Go backend and React/Vite frontend. Live feed updates via WebSocket.
 
