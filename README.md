@@ -2,6 +2,27 @@
 
 A photo upload and feed app with a Go backend and React/Vite frontend. Live feed updates via WebSocket.
 
+## Architecture
+
+```
+frontend (Vite/React)          backend (Go)
+        |                            |
+        |  REST  GET /api/pictures   |
+        |--------------------------->|
+        |                            |--- BoltDB (metadata: filename, title, tag)
+        |  REST  POST /api/upload    |--- ./pictures/ (image files on disk)
+        |--------------------------->|
+        |                            |
+        |  WebSocket  /ws            |
+        |<-------------------------->|
+        |   (live new_photo events)  |
+```
+
+- **Frontend** — React SPA served by Vite. On load it fetches all photos from the REST API. A persistent WebSocket connection to `/ws` receives `new_photo` events whenever any client uploads, instantly updating all open feeds without polling.
+- **Backend** — Single Go binary with no external framework. Handlers are split one-per-file under `handlers/`. A thread-safe hub manages all active WebSocket connections and broadcasts to them on upload.
+- **Storage** — Image files are written to `./pictures/` on disk. Metadata (filename, title, tag) is persisted in BoltDB, an embedded key/value store — no separate database process required.
+- **Tag filtering** — The `?tag=` query param is handled server-side; the frontend re-fetches from the API when a tag filter is selected.
+
 ## Requirements
 
 - Go 1.21+
