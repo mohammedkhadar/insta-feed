@@ -4,7 +4,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - app_data:/app/data
+      - ./backend/data:/app/data
     restart: unless-stopped
 
   frontend:
@@ -14,6 +14,3 @@ services:
     depends_on:
       - backend
     restart: unless-stopped
-
-volumes:
-  app_data:
